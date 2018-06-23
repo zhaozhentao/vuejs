@@ -88,11 +88,11 @@
           paddingRight: '8px'
         },
         designer: `
-        <span style="font-size:0.9em">Designed by
-          <span style="color: #e27575;font-size: 14px;">❤</span>
-          <a href="https://github.com/summerblue"target="_blank"style="color:inherit">Summer</a>
-        </span>
-      `,
+          <span style="font-size:0.9em">Designed by
+            <span style="color: #e27575;font-size: 14px;">❤</span>
+            <a href="https://github.com/summerblue"target="_blank"style="color:inherit">Summer</a>
+          </span>
+        `,
         sponsor: {
           title: '赞助商',
           list: [
@@ -156,5 +156,8 @@
 </script>
 
 <style scoped>
-  a:hover, a:focus { color: #e27575; transition: color .15s;}
+  a:hover, a:focus {
+    color: #e27575;
+    transition: color .15s;
+  }
 </style>
