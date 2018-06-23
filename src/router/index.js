@@ -4,12 +4,27 @@ import App from '@/App'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'index',
-      component: App
-    }
-  ]
+const routes = [
+  {
+    path: '/auth/register',
+    name: 'Register',
+    component: () => import('@/views/auth/Register')
+  }
+]
+
+const router = new Router({
+  mode: 'history',
+  routes
 })
+
+export default router
+
+// export default new Router({
+//   routes: [
+//     {
+//       path: '/',
+//       name: 'index',
+//       component: App
+//     }
+//   ]
+// })
