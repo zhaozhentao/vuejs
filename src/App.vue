@@ -36,4 +36,6 @@
   @import "~font-awesome/scss/font-awesome";
   @import "./styles/main.scss";
   @import "./styles/extra.scss";
+  @import 'simplemde/dist/simplemde.min.css';
+  @import 'highlight.js/styles/paraiso-dark.css';
 </style>
