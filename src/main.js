@@ -6,6 +6,7 @@ import router from './router'
 import './directives'
 import './components'
 import store from './store'
+import './filters'
 
 import VueSweetalert2 from './plugins/vue-sweetalert2'
 import Message from './plugins/message'
