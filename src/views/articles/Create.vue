@@ -3,11 +3,13 @@
     <div class="blog-pages">
       <div class="col-md-12 panel">
         <div class="panel-body">
-          <h2 class="text-center">创作文章</h2>
+          <h2 class="text-center">{{ articleId ? '编辑文章' : '创作文章' }}</h2>
+
           <hr>
           <div data-validator-form>
             <div class="form-group">
-              <input v-model.trim="title" v-validator:blur.required="{ title: '标题' }" type="text" class="form-control" placeholder="请填写标题" @input="saveTitle">
+              <input v-model.trim="title" v-validator:blur.required="{ title: '标题' }" type="text" class="form-control"
+                     placeholder="请填写标题" @input="saveTitle">
             </div>
             <div class="form-group">
               <textarea id="editor"></textarea>
@@ -35,7 +37,23 @@
     data() {
       return {
         title: '', // 文章标题
-        content: '' // 文章内容
+        content: '', // 文章内容
+        articleId: undefined // 文章 ID
+      }
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.setArticleId(vm.$route.params.articleId)
+      })
+    },
+    beforeRouteLeave(to, from, next) {
+      this.clearData()
+      next()
+    },
+    watch: {
+      '$route'(to) {
+        this.clearData()
+        this.setArticleId(to.params.articleId)
       }
     },
     mounted() {
@@ -58,21 +76,29 @@
       })
 
       this.simplemde = simplemde
-      this.fillContent()
     },
     methods: {
       saveTitle() {
         ls.setItem('smde_title', this.title)
       },
-      fillContent() {
+      fillContent(articleId) {
         const simplemde = this.simplemde
-        const title = ls.getItem('smde_title')
+        const smde_title = ls.getItem('smde_title')
 
-        if (title !== null) {
-          this.title = title
+        if (articleId !== undefined) {
+          const article = this.$store.getters.getArticleById(articleId)
+
+          if (article) {
+            const {title, content} = article
+
+            this.title = smde_title || title
+            this.content = simplemde.value() || content
+            simplemde.value(this.content)
+          }
+        } else {
+          this.title = smde_title
+          this.content = simplemde.value()
         }
-
-        this.content = simplemde.value()
       },
       post() {
         const title = this.title
@@ -84,7 +110,7 @@
             content
           }
 
-          this.$store.dispatch('post', { article })
+          this.$store.dispatch('post', {article, articleId: this.articleId})
           this.clearData()
         }
       },
@@ -93,7 +119,18 @@
         ls.removeItem('smde_title')
         this.simplemde.value('')
         this.simplemde.clearAutosavedValue()
-      }
+      },
+      setArticleId(articleId) {
+        const localArticleId = ls.getItem('articleId')
+
+        if (articleId !== undefined && !(articleId === localArticleId)) {
+          this.clearData()
+        }
+
+        this.articleId = articleId
+        this.fillContent(articleId)
+        ls.setItem('articleId', articleId)
+      },
     }
   }
 </script>
