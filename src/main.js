@@ -12,11 +12,14 @@ import './filters'
 
 import VueSweetalert2 from './plugins/vue-sweetalert2'
 import Message from './plugins/message'
+import './mock'
+import axios from 'axios'
 
 Vue.use(VueSweetalert2)
 Vue.use(Message)
 
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
 
 const AddMockData = (() => {
   // 是否加入测试数据
