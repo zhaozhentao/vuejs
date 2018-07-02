@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import ls from '../utils/localStorage'
 import router from '../router'
+import * as moreGetters from './getters'
 
 import * as moreActions from './action'
 
@@ -52,8 +53,9 @@ const actions = {
 }
 
 const getters = {
-  getArticleById: (state) => (id) => {
-    let articles = state.articles
+  getArticleById: (state, getters) => (id) => {
+    // 使用派生状态 computedArticles 作为所有文章
+    let articles = getters.computedArticles
 
     if (Array.isArray(articles)) {
       articles = articles.filter(article => parseInt(id) === parseInt(article.articleId))
@@ -61,7 +63,9 @@ const getters = {
     } else {
       return null
     }
-  }
+  },
+  // 混入 moreGetters, 你可以理解为 getters = Object.assign(getters, moreGetters)
+  ...moreGetters
 }
 
 const store = new Vuex.Store({

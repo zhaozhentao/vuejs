@@ -7,6 +7,7 @@ import './directives'
 import './components'
 import store from './store'
 import {mockArticles} from './mock/data'
+import ls from './utils/localStorage'
 import './filters'
 
 import VueSweetalert2 from './plugins/vue-sweetalert2'
