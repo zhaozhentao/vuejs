@@ -13,6 +13,7 @@ const state = {
   auth: ls.getItem('auth'),
   articles: ls.getItem('articles'),
   searchValue: '',
+  origin: location.origin,
 }
 
 const mutations = {
