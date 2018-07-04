@@ -16,7 +16,6 @@
           <router-link :to="`/${result.uname}`">
             <img :src="result.uavatar" class="avatar avatar-small">
             <small>{{ result.uname }}</small>
-            </a>
           </router-link>
         </h2>
         <div class="info">
